@@ -20,6 +20,7 @@ public class CreateProductRequest {
     private String topLevelCategory;
     private String secondLevelCategory;
     private String thirdLevelCategory;
+    private String createdAt;
 
     public String getTitle() {
         return title;
@@ -124,4 +125,6 @@ public class CreateProductRequest {
     public void setThirdLevelCategory(String thirdLevelCategory) {
         this.thirdLevelCategory = thirdLevelCategory;
     }
+
+
 }

@@ -3,6 +3,8 @@ package com.sky.ecommerce.model;
 import jakarta.persistence.*;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +31,7 @@ public class Product {
     @Column(name = "discounted_price")
     private int discountedPrice;
 
-    @Column(name = "discount percent")
+    @Column(name = "discount_percent")
     private int discountPercent;
 
     @Column(name = "quantity")
@@ -62,9 +64,11 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    private LocalDateTime createdAt;
+
     public Product(){}
 
-    public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent, int quantity, String brand, String colour, Set<Size> sizes, String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category category) {
+    public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent, int quantity, String brand, String colour, Set<Size> sizes, String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category category , LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -80,6 +84,7 @@ public class Product {
         this.reviews = reviews;
         this.numRatings = numRatings;
         this.category = category;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -200,5 +205,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
