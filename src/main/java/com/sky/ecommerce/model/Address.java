@@ -29,8 +29,8 @@ public class Address {
     private String zipCode;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
     @JsonIgnore
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String mobile;
