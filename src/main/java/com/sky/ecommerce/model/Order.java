@@ -1,5 +1,6 @@
 package com.sky.ecommerce.model;
 
+import com.sky.ecommerce.user.domain.OrderStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -11,16 +12,16 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "order_id")
+    @Column(name="order_id")
     private String orderId;
 
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private LocalDateTime orderDate;
@@ -31,37 +32,54 @@ public class Order {
     private Address shippingAddress;
 
     @Embedded
-    private PaymentDetails paymentDetails = new PaymentDetails();
+    private PaymentDetails paymentDetails=new PaymentDetails();
 
     private double totalPrice;
 
     private Integer totalDiscountedPrice;
 
-    private Integer discounted;
+    private Integer discounte;
 
-    private String orderStatus;
+    private OrderStatus orderStatus;
 
     private int totalItem;
 
-    private LocalDateTime  createdAt;
+    private LocalDateTime createdAt;
 
-    public Order(){}
+    public Order() {
 
-    public Order(Long id, String orderId, User user, List<OrderItem> orderItems, LocalDateTime orderDate, LocalDateTime deliveryDate, Address shippingAddress, PaymentDetails paymentDetails, double totalPrice, Integer totalDiscountedPrice, Integer discounted, String orderStatus, int totalItem, LocalDateTime createdAt) {
-        this.id = id;
-        this.orderId = orderId;
-        this.user = user;
-        this.orderItems = orderItems;
-        this.orderDate = orderDate;
-        this.deliveryDate = deliveryDate;
-        this.shippingAddress = shippingAddress;
-        this.paymentDetails = paymentDetails;
-        this.totalPrice = totalPrice;
-        this.totalDiscountedPrice = totalDiscountedPrice;
-        this.discounted = discounted;
-        this.orderStatus = orderStatus;
-        this.totalItem = totalItem;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public int getTotalItem() {
+        return totalItem;
+    }
+
+    public void setTotalItem(int totalItem) {
+        this.totalItem = totalItem;
+    }
+
+    public Integer getDiscounte() {
+        return discounte;
+    }
+
+    public void setDiscounte(Integer discounte) {
+        this.discounte = discounte;
+    }
+
+    public Integer getTotalDiscountedPrice() {
+        return totalDiscountedPrice;
+    }
+
+    public void setTotalDiscountedPrice(Integer totalDiscountedPrice) {
+        this.totalDiscountedPrice = totalDiscountedPrice;
     }
 
     public Long getId() {
@@ -70,14 +88,6 @@ public class Order {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
     }
 
     public User getUser() {
@@ -136,43 +146,23 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Integer getTotalDiscountedPrice() {
-        return totalDiscountedPrice;
-    }
-
-    public void setTotalDiscountedPrice(Integer totalDiscountedPrice) {
-        this.totalDiscountedPrice = totalDiscountedPrice;
-    }
-
-    public Integer getDiscounted() {
-        return discounted;
-    }
-
-    public void setDiscounted(Integer discounted) {
-        this.discounted = discounted;
-    }
-
-    public String getOrderStatus() {
+    public OrderStatus getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(String orderStatus) {
+    public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
     }
 
-    public int getTotalItem() {
-        return totalItem;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setTotalItem(int totalItem) {
-        this.totalItem = totalItem;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    // constructors, getters and setters
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+
 }

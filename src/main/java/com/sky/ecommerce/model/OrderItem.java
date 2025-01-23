@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class OrderItem {
@@ -17,31 +18,37 @@ public class OrderItem {
     private Order order;
 
     @ManyToOne
-    private  Product product;
+    private Product product;
 
-    private  String size;
+    private String size;
 
-    private int  quantity;
+    private int quantity;
 
-    private  Integer price;
+    private Integer price;
 
-    private  Integer discountedPrice;
+    private Integer discountedPrice;
 
-    private  Long userId;
+    private Long userId;
 
     private LocalDateTime deliveryDate;
 
-    public OrderItem(){}
+    public OrderItem() {
+        // TODO Auto-generated constructor stub
+    }
 
-    public OrderItem(Long id, Order order, Product product, String size, int quantity, Integer price, Integer discountedPrice, Long userId, LocalDateTime deliveryDate) {
-        this.id = id;
-        this.order = order;
-        this.product = product;
-        this.size = size;
-        this.quantity = quantity;
-        this.price = price;
+    public Integer getDiscountedPrice() {
+        return discountedPrice;
+    }
+
+    public void setDiscountedPrice(Integer discountedPrice) {
         this.discountedPrice = discountedPrice;
-        this.userId = userId;
+    }
+
+    public LocalDateTime getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDateTime deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
@@ -93,14 +100,6 @@ public class OrderItem {
         this.price = price;
     }
 
-    public Integer getDiscountedPrice() {
-        return discountedPrice;
-    }
-
-    public void setDiscountedPrice(Integer discountedPrice) {
-        this.discountedPrice = discountedPrice;
-    }
-
     public Long getUserId() {
         return userId;
     }
@@ -109,11 +108,23 @@ public class OrderItem {
         this.userId = userId;
     }
 
-    public LocalDateTime getDeliveryDate() {
-        return deliveryDate;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, order, price, product, quantity, size, userId);
     }
 
-    public void setDeliveryDate(LocalDateTime deliveryDate) {
-        this.deliveryDate = deliveryDate;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        OrderItem other = (OrderItem) obj;
+        return Objects.equals(id, other.id) && Objects.equals(order, other.order) && Objects.equals(price, other.price)
+                && Objects.equals(product, other.product) && quantity == other.quantity
+                && Objects.equals(size, other.size) && Objects.equals(userId, other.userId);
     }
+
 }

@@ -9,6 +9,7 @@ import com.sky.ecommerce.model.User;
 import com.sky.ecommerce.repository.CartItemRepository;
 import com.sky.ecommerce.repository.CartRepository;
 import com.sky.ecommerce.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class CartItemServiceImpl implements  CartItemService{
     private CartRepository cartRepository;
     private UserService userService;
 
+    @Autowired
     public CartItemServiceImpl(CartItemRepository cartItemRepository, CartRepository cartRepository, UserService userService) {
         this.cartItemRepository = cartItemRepository;
         this.cartRepository = cartRepository;

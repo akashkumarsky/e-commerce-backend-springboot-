@@ -7,6 +7,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,43 +17,42 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.crypto.SecretKey;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+
 import java.util.List;
 
 public class JwtValidator extends OncePerRequestFilter {
 
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
         String jwt = request.getHeader(JwtConstant.JWT_HEADER);
-
-        if (jwt != null && jwt.startsWith("Bearer ")) {
-            jwt = jwt.substring(7);
+        System.out.println("jwt ------ "+jwt);
+        if(jwt!=null) {
+            jwt=jwt.substring(7);
+            System.out.println("jwt ------ "+jwt);
             try {
-                SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes(StandardCharsets.UTF_8));
-                Claims claims = Jwts.parserBuilder()
-                        .setSigningKey(key)
-                        .build()
-                        .parseClaimsJws(jwt)
-                        .getBody();
 
-                String email = claims.getSubject(); // Typically, "sub" claim stores the subject (e.g., email or username)
-                String authorities = claims.get("authorities", String.class);
+                SecretKey key= Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
-                List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
-                Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, auths);
+                Claims claims=Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String email=String.valueOf(claims.get("email"));
+
+                String authorities=String.valueOf(claims.get("authorities"));
+
+                List<GrantedAuthority> auths=AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+                Authentication athentication=new UsernamePasswordAuthenticationToken(email,null, auths);
+
+                SecurityContextHolder.getContext().setAuthentication(athentication);
 
             } catch (Exception e) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("Invalid token: " + e.getMessage());
-                response.getWriter().flush();
-                response.getWriter().close();
-                return;
+                // TODO: handle exception
+                throw new BadCredentialsException("invalid token...");
             }
         }
-
         filterChain.doFilter(request, response);
+
     }
 }

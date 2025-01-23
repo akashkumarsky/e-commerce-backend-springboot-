@@ -8,28 +8,42 @@ import java.util.Set;
 public class CreateProductRequest {
 
     private String title;
+
     private String description;
-    private  int price;
+
+    private int price;
+
     private int discountedPrice;
-    private int discountPercentage;
+
+    private int discountPersent;
+
     private int quantity;
+
     private String brand;
-    private String colour;
-    private Set<Size> size = new HashSet<>();
+
+    private String color;
+
+    private Set<Size> size=new HashSet<>();
+
     private String imageUrl;
-    private String topLevelCategory;
-    private String secondLevelCategory;
-    private String thirdLevelCategory;
-    private String createdAt;
+
+    private String topLavelCategory;
+    private String secondLavelCategory;
+    private String thirdLavelCategory;
+
+    public Set<Size> getSize() {
+        return size;
+    }
+    public void setSize(Set<Size> size) {
+        this.size = size;
+    }
 
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
-
     public String getDescription() {
         return description;
     }
@@ -54,12 +68,12 @@ public class CreateProductRequest {
         this.discountedPrice = discountedPrice;
     }
 
-    public int getDiscountPercentage() {
-        return discountPercentage;
+    public int getDiscountPersent() {
+        return discountPersent;
     }
 
-    public void setDiscountPercentage(int discountPercentage) {
-        this.discountPercentage = discountPercentage;
+    public void setDiscountPersent(int discountPersent) {
+        this.discountPersent = discountPersent;
     }
 
     public int getQuantity() {
@@ -78,20 +92,12 @@ public class CreateProductRequest {
         this.brand = brand;
     }
 
-    public String getColour() {
-        return colour;
+    public String getColor() {
+        return color;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public Set<Size> getSize() {
-        return size;
-    }
-
-    public void setSize(Set<Size> size) {
-        this.size = size;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getImageUrl() {
@@ -102,29 +108,31 @@ public class CreateProductRequest {
         this.imageUrl = imageUrl;
     }
 
-    public String getTopLevelCategory() {
-        return topLevelCategory;
+    public String getTopLavelCategory() {
+        return topLavelCategory;
     }
 
-    public void setTopLevelCategory(String topLevelCategory) {
-        this.topLevelCategory = topLevelCategory;
+    public void setTopLavelCategory(String topLavelCategory) {
+        this.topLavelCategory = topLavelCategory;
     }
 
-    public String getSecondLevelCategory() {
-        return secondLevelCategory;
+    public String getSecondLavelCategory() {
+        return secondLavelCategory;
     }
 
-    public void setSecondLevelCategory(String secondLevelCategory) {
-        this.secondLevelCategory = secondLevelCategory;
+    public void setSecondLavelCategory(String secondLavelCategory) {
+        this.secondLavelCategory = secondLavelCategory;
     }
 
-    public String getThirdLevelCategory() {
-        return thirdLevelCategory;
+    public String getThirdLavelCategory() {
+        return thirdLavelCategory;
     }
 
-    public void setThirdLevelCategory(String thirdLevelCategory) {
-        this.thirdLevelCategory = thirdLevelCategory;
+    public void setThirdLavelCategory(String thirdLavelCategory) {
+        this.thirdLavelCategory = thirdLavelCategory;
     }
+
+
 
 
 }

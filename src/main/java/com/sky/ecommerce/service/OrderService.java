@@ -8,33 +8,23 @@ import com.sky.ecommerce.model.User;
 import java.util.List;
 
 public interface OrderService {
-    Order createOrder (User user, Address address);
+    public Order createOrder(User user, Address shippingAdress);
 
-    // Find an order by its ID
-    Order findOrderById(Long orderId) throws OrderException;
+    public Order findOrderById(Long orderId) throws OrderException;
 
-    // Get a user's order history
-    List<Order> userOrderHistory(Long userId) throws OrderException;
+    public List<Order> usersOrderHistory(Long userId);
 
-    // Place a new order
-    Order placedOrder(Long userId) throws OrderException;
+    public Order placedOrder(Long orderId) throws OrderException;
 
-    // Confirm an order
-    Order confirmedOrder(Long orderId) throws OrderException;
+    public Order confirmedOrder(Long orderId)throws OrderException;
 
-    // Mark an order as shipped
-    Order shippedOrder(Long orderId) throws OrderException;
+    public Order shippedOrder(Long orderId) throws OrderException;
 
-    // Mark an order as delivered
-    Order deliveredOrder(Long orderId) throws OrderException;
+    public Order deliveredOrder(Long orderId) throws OrderException;
 
-    // Cancel an order
-    Order canceledOrder(Long orderId) throws OrderException;
+    public Order cancledOrder(Long orderId) throws OrderException;
 
-    // get all Orders
-    List<Order>getAllOrders();
+    public List<Order>getAllOrders();
 
-
-    //delete Orders
-     void deleteOrder(Long orderId) throws  OrderException;
+    public void deleteOrder(Long orderId) throws OrderException;
 }

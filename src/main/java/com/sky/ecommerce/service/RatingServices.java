@@ -7,9 +7,9 @@ import com.sky.ecommerce.request.RatingRequest;
 
 import java.util.List;
 
-public interface RatingService {
+public interface RatingServices {
 
-    public Rating createRating(RatingRequest req, User user)throws ProductException;
+    public Rating createRating(RatingRequest req, User user) throws ProductException;
 
-    public List<Rating>getProductRating(Long productId);
+    public List<Rating> getProductsRating(Long productId);
 }

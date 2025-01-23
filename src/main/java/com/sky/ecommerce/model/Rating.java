@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+
 @Entity
+@Table(name = "rating")
 public class Rating {
 
     @Id
@@ -13,21 +15,38 @@ public class Rating {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id",nullable = false)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @JoinColumn(name = "rating")
+    @Column(name = "rating")
     private double rating;
 
     private LocalDateTime createdAt;
 
-    public Rating(){}
+    public Rating() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Rating(Long id, User user, Product product, double rating, LocalDateTime createdAt) {
+        super();
+        this.id = id;
+        this.user = user;
+        this.product = product;
+        this.rating = rating;
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public Long getId() {
         return id;
@@ -59,13 +78,5 @@ public class Rating {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 }

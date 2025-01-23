@@ -3,7 +3,7 @@ package com.sky.ecommerce.model;
 import jakarta.persistence.Column;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 public class PaymentInformation {
 
@@ -18,4 +18,8 @@ public class PaymentInformation {
 
     @Column(name = "cvv")
     private String cvv;
+
+    // getters and setters
 }
+
+

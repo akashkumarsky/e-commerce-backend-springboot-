@@ -2,66 +2,60 @@ package com.sky.ecommerce.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "first_name")
     private String firstName;
 
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
     private String email;
 
+    //    @Enumerated(EnumType.STRING)
     private String role;
 
     private String mobile;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Address> address = new ArrayList<Address>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses=new ArrayList<>();
 
     @Embedded
     @ElementCollection
-    @CollectionTable(name ="payment_information",joinColumns = @JoinColumn(name = "user_id"))
-    private List<PaymentInformation> paymentInformations = new ArrayList<PaymentInformation>();
+    @CollectionTable(name="payment_information",joinColumns = @JoinColumn(name="user_id"))
+    private List<PaymentInformation> paymentInformation=new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Rating> ratings = new ArrayList<Rating>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Rating>ratings=new ArrayList<>();
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Review> reviews = new ArrayList<Review>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Review>reviews=new ArrayList<>();
 
     private LocalDateTime createdAt;
-
-    public User(){
-
-    }
-
-    public User(Long id, String firstName, String lastName, String password, String email, String role, String mobile, List<Address> address, List<PaymentInformation> paymentInformations, List<Rating> ratings, List<Review> reviews, LocalDateTime createdAt) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.role = role;
-        this.mobile = mobile;
-        this.address = address;
-        this.paymentInformations = paymentInformations;
-        this.ratings = ratings;
-        this.reviews = reviews;
-        this.createdAt = createdAt;
-    }
 
     public Long getId() {
         return id;
@@ -119,20 +113,20 @@ public class User {
         this.mobile = mobile;
     }
 
-    public List<Address> getAddress() {
-        return address;
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-    public void setAddress(List<Address> address) {
-        this.address = address;
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
     }
 
-    public List<PaymentInformation> getPaymentInformations() {
-        return paymentInformations;
+    public List<PaymentInformation> getPaymentInformation() {
+        return paymentInformation;
     }
 
-    public void setPaymentInformations(List<PaymentInformation> paymentInformations) {
-        this.paymentInformations = paymentInformations;
+    public void setPaymentInformation(List<PaymentInformation> paymentInformation) {
+        this.paymentInformation = paymentInformation;
     }
 
     public List<Rating> getRatings() {

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -15,21 +16,30 @@ public class Category {
     @Size(max = 50)
     private String name;
 
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_category_id")
     private Category parentCategory;
 
     private int level;
 
-    public Category(){}
 
-    public Category(Long id, String name, Category parentCategory, int level) {
-        this.id = id;
-        this.name = name;
-        this.parentCategory = parentCategory;
+    public Category() {
+        // TODO Auto-generated constructor stub
+    }
+
+
+
+
+
+    public int getLevel() {
+        return level;
+    }
+
+
+    public void setLevel(int level) {
         this.level = level;
     }
+
 
     public Long getId() {
         return id;
@@ -39,11 +49,11 @@ public class Category {
         this.id = id;
     }
 
-    public @NotNull @Size(max = 50) String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotNull @Size(max = 50) String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -55,11 +65,7 @@ public class Category {
         this.parentCategory = parentCategory;
     }
 
-    public int getLevel() {
-        return level;
-    }
 
-    public void setLevel(int level) {
-        this.level = level;
-    }
+
+
 }

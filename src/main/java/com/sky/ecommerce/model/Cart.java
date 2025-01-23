@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
 public class Cart {
 
@@ -12,27 +13,51 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-
-    @ManyToOne
-    @JoinColumn(name = "User_Id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @Column(name = "cart_items")
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "total_price")
-    private  double totalPrice;
+    private double totalPrice;
 
-    @Column(name = "total_item")
+    @Column(name="total_item")
     private int totalItem;
 
     private int totalDiscountedPrice;
 
-    private  int discount;
+    private int discounte;
 
-    public Cart(){}
+    public Cart() {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Cart(Long id, User user, Set<CartItem> cartItems, double totalPrice, int totalItem) {
+        super();
+        this.id = id;
+        this.user = user;
+        this.cartItems = cartItems;
+        this.totalPrice = totalPrice;
+        this.totalItem = totalItem;
+    }
+
+    public int getTotalDiscountedPrice() {
+        return totalDiscountedPrice;
+    }
+
+    public void setTotalDiscountedPrice(int totalDiscountedPrice) {
+        this.totalDiscountedPrice = totalDiscountedPrice;
+    }
+    public int getDiscounte() {
+        return discounte;
+    }
+
+    public void setDiscounte(int discounte) {
+        this.discounte = discounte;
+    }
 
     public Long getId() {
         return id;
@@ -74,19 +99,4 @@ public class Cart {
         this.totalItem = totalItem;
     }
 
-    public int getTotalDiscountedPrice() {
-        return totalDiscountedPrice;
-    }
-
-    public void setTotalDiscountedPrice(int totalDiscountedPrice) {
-        this.totalDiscountedPrice = totalDiscountedPrice;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
-    }
 }

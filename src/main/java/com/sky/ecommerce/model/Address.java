@@ -3,6 +3,7 @@ package com.sky.ecommerce.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+
 @Entity
 public class Address {
 
@@ -10,10 +11,10 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name="first_name")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name="last_name")
     private String lastName;
 
     @Column(name = "street_address")
@@ -29,17 +30,18 @@ public class Address {
     private String zipCode;
 
     @ManyToOne
+    @JoinColumn(name="user_id")
     @JsonIgnore
-    @JoinColumn(name = "user_id")
     private User user;
 
     private String mobile;
 
-    public Address (){
+    public Address() {
 
     }
-
-    public Address(Long id, String firstName, String lastName, String streetAddress, String city, String state, String zipCode, User user, String mobile) {
+    public Address(Long id, String firstName, String lastName, String streetAddress, String city, String state,
+                   String zipCode, User user, String mobile) {
+        super();
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,75 +53,96 @@ public class Address {
         this.mobile = mobile;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+
+    public Long getId() {
+        return id;
     }
 
-    public String getLastName() {
-        return lastName;
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
 
     public User getUser() {
         return user;
     }
 
+
     public void setUser(User user) {
         this.user = user;
     }
+
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
+
+    public void setStreetAddress(String streetAddress) {
+        this.streetAddress = streetAddress;
+    }
+
+
+    public String getCity() {
+        return city;
+    }
+
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+
+    public String getState() {
+        return state;
+    }
+
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
 
     public String getMobile() {
         return mobile;
     }
 
+
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
+
+
+
 }

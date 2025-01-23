@@ -5,7 +5,5 @@ public class OrderException extends Exception {
         super(message);
     }
 
-    public OrderException(String message, Throwable cause) {
-        super(message, cause);
-    }
+
 }

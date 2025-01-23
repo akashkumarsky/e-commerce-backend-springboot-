@@ -7,9 +7,10 @@ import com.sky.ecommerce.model.User;
 import com.sky.ecommerce.repository.ProductRepository;
 import com.sky.ecommerce.repository.ReviewRepository;
 import com.sky.ecommerce.request.ReviewRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ReviewServiceImpl implements  ReviewService{
     private ProductService productService;
     private ProductRepository productRepository;
 
+    @Autowired
     public ReviewServiceImpl(ReviewRepository reviewRepository, ProductService productService, ProductRepository productRepository) {
         this.reviewRepository = reviewRepository;
         this.productService = productService;
@@ -39,8 +41,7 @@ public class ReviewServiceImpl implements  ReviewService{
         review.setReview(req.getReview());
         review.setCreatedAt(LocalDateTime.now());
 
-
-
+        productRepository.save(product);
         return reviewRepository.save(review);
     }
 

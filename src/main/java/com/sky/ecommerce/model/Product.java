@@ -5,19 +5,14 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Product {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
 
     @Column(name = "title")
     private String title;
@@ -31,8 +26,8 @@ public class Product {
     @Column(name = "discounted_price")
     private int discountedPrice;
 
-    @Column(name = "discount_percent")
-    private int discountPercent;
+    @Column(name="discount_persent")
+    private int discountPersent;
 
     @Column(name = "quantity")
     private int quantity;
@@ -40,44 +35,50 @@ public class Product {
     @Column(name = "brand")
     private String brand;
 
-    @Column(name = "colour")
-    private String colour;
+    @Column(name = "color")
+    private String color;
 
     @Embedded
     @ElementCollection
-    @Column(name = "size")
-    private Set<Size> sizes =new HashSet<Size>();
+    @Column(name = "sizes")
+    private Set<Size> sizes=new HashSet<>();
 
     @Column(name = "image_url")
     private String imageUrl;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Rating> ratings = new ArrayList<Rating>();
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Rating>ratings=new ArrayList<>();
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Review> reviews = new ArrayList<Review>();
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Review>reviews=new ArrayList<>();
 
     @Column(name = "num_ratings")
     private int numRatings;
 
+
     @ManyToOne()
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name="category_id")
     private Category category;
 
     private LocalDateTime createdAt;
 
-    public Product(){}
+    public Product() {
 
-    public Product(Long id, String title, String description, int price, int discountedPrice, int discountPercent, int quantity, String brand, String colour, Set<Size> sizes, String imageUrl, List<Rating> ratings, List<Review> reviews, int numRatings, Category category , LocalDateTime createdAt) {
+    }
+
+    public Product(Long id, String title, String description, int price, int discountedPrice, int discountPersent,
+                   int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings,
+                   List<Review> reviews, int numRatings, Category category, LocalDateTime createdAt) {
+        super();
         this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
         this.discountedPrice = discountedPrice;
-        this.discountPercent = discountPercent;
+        this.discountPersent = discountPersent;
         this.quantity = quantity;
         this.brand = brand;
-        this.colour = colour;
+        this.color = color;
         this.sizes = sizes;
         this.imageUrl = imageUrl;
         this.ratings = ratings;
@@ -87,12 +88,27 @@ public class Product {
         this.createdAt = createdAt;
     }
 
-    public Long getId() {
-        return id;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public String getTitle() {
@@ -101,6 +117,14 @@ public class Product {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -127,12 +151,12 @@ public class Product {
         this.discountedPrice = discountedPrice;
     }
 
-    public int getDiscountPercent() {
-        return discountPercent;
+    public int getDiscountPersent() {
+        return discountPersent;
     }
 
-    public void setDiscountPercent(int discountPercent) {
-        this.discountPercent = discountPercent;
+    public void setDiscountPersent(int discountPersent) {
+        this.discountPersent = discountPersent;
     }
 
     public int getQuantity() {
@@ -151,20 +175,12 @@ public class Product {
         this.brand = brand;
     }
 
-    public String getColour() {
-        return colour;
+    public String getColor() {
+        return color;
     }
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public Set<Size> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(Set<Size> sizes) {
-        this.sizes = sizes;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getImageUrl() {
@@ -173,22 +189,6 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
     }
 
     public int getNumRatings() {
@@ -207,11 +207,35 @@ public class Product {
         this.category = category;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public Set<Size> getSizes() {
+        return sizes;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setSizes(Set<Size> sizes) {
+        this.sizes = sizes;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, category, color, description, discountPersent, discountedPrice, id, imageUrl,
+                numRatings, price, quantity, ratings, reviews, sizes, title);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Product other = (Product) obj;
+        return Objects.equals(brand, other.brand) && Objects.equals(category, other.category)
+                && Objects.equals(color, other.color) && Objects.equals(description, other.description)
+                && discountPersent == other.discountPersent && discountedPrice == other.discountedPrice
+                && Objects.equals(id, other.id) && Objects.equals(imageUrl, other.imageUrl)
+                && numRatings == other.numRatings && price == other.price && quantity == other.quantity
+                && Objects.equals(ratings, other.ratings) && Objects.equals(reviews, other.reviews)
+                && Objects.equals(sizes, other.sizes) && Objects.equals(title, other.title);
     }
 }
